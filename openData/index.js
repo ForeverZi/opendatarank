@@ -8,6 +8,7 @@
 const Cache = require("./Cache");
 
 const imgCache = new Cache((img)=>img.src="");
+const canvasCache = new Cache((canv)=>canv.destroy());
 
 const RES_DIR = 'openData/res/';
 const ITEM_WIDTH = 600;
@@ -22,6 +23,7 @@ class Item {
      */
     constructor(info) {
         this.canvas = wx.createCanvas();
+        canvasCache.add(this.canvas);
         this.canvas.width = ITEM_WIDTH;
         this.canvas.height = ITEM_HEIGHT;
         this.context = this.canvas.getContext("2d");
@@ -140,6 +142,7 @@ class RankListRenderer {
     destroy() {
         this.hide();
         imgCache.clear();
+        canvasCache.clear();
     }
 
     show() {

@@ -11,6 +11,7 @@ class Cache{
         this._pool = {}
         // 销毁值的方法
         this._destroyFunc = destroyFunc;
+        this._id = 0;
     }
 
     get(key){
@@ -21,6 +22,13 @@ class Cache{
         // 如果之前的缓存中存在值，则先销毁
         this.delete(key);
         this._pool[key] = value;
+    }
+
+    add(value){
+        this.delete(this._id);
+        this._pool[this._id] = value;
+        this._id++;
+        return this._id - 1;
     }
 
     delete(key){
